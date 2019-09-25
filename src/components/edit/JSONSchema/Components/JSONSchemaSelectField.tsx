@@ -25,6 +25,7 @@ export default function JSONSchemaSelectField(props: FieldProps) {
 
   return (
     <Form.Select
+      data-testid="select-field"
       control={Select}
       label={schema.label}
       options={renderOptions()}

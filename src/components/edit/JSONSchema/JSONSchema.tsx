@@ -71,7 +71,6 @@ export default class JSONSchema extends Component<Props, State> {
       case Widget.select:
         return (
           <JSONSchemaSelectField
-            key={schema.name}
             schema={schema}
             onSaved={v => this.onSaved(v, schema)}
           ></JSONSchemaSelectField>
@@ -79,7 +78,6 @@ export default class JSONSchema extends Component<Props, State> {
       case Widget.foreignkey:
         return (
           <JSONSchemaForignField
-            key={schema.name}
             select={choice => {
               schema.choice = choice;
               this.setState({
@@ -91,10 +89,16 @@ export default class JSONSchema extends Component<Props, State> {
             url={this.props.url}
           ></JSONSchemaForignField>
         );
-      case Widget.text || Widget.number:
+      case Widget.text:
         return (
           <JSONSchemaTextField
-            key={schema.name}
+            schema={schema}
+            onSaved={v => this.onSaved(v, schema)}
+          />
+        );
+      case Widget.number:
+        return (
+          <JSONSchemaTextField
             schema={schema}
             onSaved={v => this.onSaved(v, schema)}
           />
@@ -118,8 +122,10 @@ export default class JSONSchema extends Component<Props, State> {
         <Form loading={loading}>
           {schemaList &&
             schemaList.schemaList
-              .filter(s => !s.readonly && s.widget !== Widget.tomanyTable)
-              .map(s => <Form.Field>{this.renderField(s)}</Form.Field>)}
+              .filter(s => !s.readonly)
+              .map(s => (
+                <Form.Field key={s.name}>{this.renderField(s)}</Form.Field>
+              ))}
           <Button
             loading={loading === true}
             onClick={() => {
