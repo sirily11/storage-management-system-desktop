@@ -1,9 +1,6 @@
 name: Build and deploy
 
-on:
-  release
-  types: [published, created, edited]
-
+on: [release]
 jobs:
   macOS_buld:
     name: building on macos
