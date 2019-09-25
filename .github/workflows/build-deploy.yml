@@ -2,8 +2,8 @@ name: Build and deploy
 
 on:
   push:
-    branches:
-      - release/*
+    tags:
+      - "v*.*.*"
 jobs:
   test:
     name: Testing
