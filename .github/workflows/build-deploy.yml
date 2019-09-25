@@ -1,8 +1,9 @@
 name: Build and deploy
 
 on:
-  project_column:
-    types: [published]
+  push:
+    branches:
+    - release/*
 jobs:
   test:
     name: Testing
