@@ -1,7 +1,7 @@
 name: Build and deploy
 
-on: 
-  release:
+on:
+  project_column:
     types: [published]
 jobs:
   test:
