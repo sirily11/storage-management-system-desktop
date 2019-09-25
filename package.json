@@ -1,7 +1,7 @@
 {
   "name": "storage_manager",
   "author": "Qiwei Li",
-  "version": "0.7.9",
+  "version": "v0.7.9",
   "private": true,
   "dependencies": {
     "@babel/core": "^7.6.2",
@@ -73,6 +73,7 @@
   },
   "build": {
     "appId": "app.test",
+    "artifactName": "storage-manager.${ext}",
     "mac": {
       "category": "admin"
     }
