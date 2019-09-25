@@ -3,21 +3,20 @@ name: Build and deploy
 on:
   push:
     branches:
-    - release/*
+      - release/*
 jobs:
   test:
     name: Testing
     runs-on: ubuntu-latest
-    - name: yarn install, and test
-      run: echo hello world
+    steps:
+      - name: yarn install, and test
+        run: echo hello world
   # macOS_buld:
   #   name: building on macos
   #   runs-on: macOS-latest
-
   #   strategy:
   #     matrix:
   #       node-version: [10.x]
-
   #   steps:
   #     - uses: actions/checkout@v1
   #     - name: Use Node.js ${{ matrix.node-version }}
