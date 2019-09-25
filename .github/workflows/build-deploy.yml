@@ -1,45 +1,52 @@
 name: Build and deploy
 
-on: [release]
+on: 
+  release:
+    types: [published]
 jobs:
-  macOS_buld:
-    name: building on macos
-    runs-on: macOS-latest
+  test:
+    name: Testing
+    runs-on: ubuntu-latest
+    - name: yarn install, and test
+      run: echo hello world
+  # macOS_buld:
+  #   name: building on macos
+  #   runs-on: macOS-latest
 
-    strategy:
-      matrix:
-        node-version: [10.x]
+  #   strategy:
+  #     matrix:
+  #       node-version: [10.x]
 
-    steps:
-      - uses: actions/checkout@v1
-      - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v1
-        with:
-          node-version: ${{ matrix.node-version }}
-      - name: yarn install, and test
-        run: |
-          yarn install
-          yarn test
-        env:
-          CI: false
-      - name: Build on MacOS
-        env:
-          ELECTRON: true
-          # APP_VERSION_NUMBER: 0.5.9
-        run: yarn build
-      - name: Build Electron
-        env:
-          ELECTRON: true
-          CSC_KEY_PASSWORD: ${{ secrets.CSC_KEY_PASSWORD }}
-        run: yarn mac
-      - name: see directory
-        run: ls
-      - name: check env
-        run: echo $ELECTRON $FEATHERS_URL
-      - name: Upload binaries to release
-        uses: svenstaro/upload-release-action@v1-release
-        with:
-          repo_token: ${{ secrets.GITHUB_TOKEN }}
-          file: dist/storage_manager-${{ github.ref }}.dmg
-          asset_name: storage_manager.dmg
-          tag: ${{ github.ref }}
+  #   steps:
+  #     - uses: actions/checkout@v1
+  #     - name: Use Node.js ${{ matrix.node-version }}
+  #       uses: actions/setup-node@v1
+  #       with:
+  #         node-version: ${{ matrix.node-version }}
+  #     - name: yarn install, and test
+  #       run: |
+  #         yarn install
+  #         yarn test
+  #       env:
+  #         CI: false
+  #     - name: Build on MacOS
+  #       env:
+  #         ELECTRON: true
+  #         # APP_VERSION_NUMBER: 0.5.9
+  #       run: yarn build
+  #     - name: Build Electron
+  #       env:
+  #         ELECTRON: true
+  #         CSC_KEY_PASSWORD: ${{ secrets.CSC_KEY_PASSWORD }}
+  #       run: yarn mac
+  #     - name: see directory
+  #       run: ls
+  #     - name: check env
+  #       run: echo $ELECTRON $FEATHERS_URL
+  #     - name: Upload binaries to release
+  #       uses: svenstaro/upload-release-action@v1-release
+  #       with:
+  #         repo_token: ${{ secrets.GITHUB_TOKEN }}
+  #         file: dist/storage_manager-${{ github.ref }}.dmg
+  #         asset_name: storage_manager.dmg
+  #         tag: ${{ github.ref }}
