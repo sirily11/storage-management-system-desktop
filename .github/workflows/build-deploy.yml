@@ -4,7 +4,6 @@ on: [release]
 jobs:
   macOS_buld:
     name: building on macos
-    needs: test
     runs-on: macOS-latest
 
     strategy:
@@ -20,6 +19,7 @@ jobs:
       - name: yarn install, and test
         run: |
           yarn install
+          yarn test
         env:
           CI: false
       - name: Build on MacOS
