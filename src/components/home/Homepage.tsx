@@ -22,6 +22,7 @@ import {
   IconButton,
   Fade
 } from "@material-ui/core";
+import { Grid, Sticky } from "semantic-ui-react";
 
 import RemoteScannerPage from "../remoteScanner/RemoteScannerPage";
 import QRDownload from "../QRDownload/QRDownload";
@@ -218,67 +219,75 @@ export default class Homepage extends Component<Props, State> {
 
   render() {
     return (
-      <div className="container-fluid h-100" style={{ overflowY: "hidden" }}>
-        <div className="row h-100">
-          <CheckoutPage item={this.state.fetchItem} />
-          <div
-            className="col-6 col-lg-4 mt-4 mb-4"
-            style={{ overflowY: "hidden" }}
-          >
-            <SearchField
-              search={this.search}
-              listener={this._handleScanner}
-              refresh={this._onmount}
-            />
-            <FilterField
-              categories={this.state.categories}
-              value={this.state.selectedCategory}
-              onchange={c => {
-                let searchItem = this.state.abstractItem.filter(
-                  v => v.category_name === c
-                );
-                console.log(c);
-                this.setState({ selectedCategory: c, searchItems: searchItem });
+      <div className="h-100">
+        <Grid className="h-100">
+          <Grid.Column mobile={8} tablet={6} computer={5}>
+            <div
+              style={{
+                position: "sticky",
+                top: "10px",
+                marginLeft: 10,
+                marginRight: 10
               }}
-            />
-            <AutoSizer className="h-80">
-              {({ height, width }) => (
-                <List
-                  height={height - 149}
-                  width={width - 20}
-                  itemCount={this.state.searchItems.length}
-                  itemSize={106}
-                >
-                  {({ index, style }) => (
-                    <Collapse in={true}>
-                      <ItemRow
-                        style={style}
-                        selected={this.state.selectedId}
-                        onDeleted={this._handleDeleted}
-                        item={this.state.searchItems[index]}
-                        onSelected={id => {
-                          this.setState({ selectedId: id });
-                        }}
-                      />
-                    </Collapse>
-                  )}
-                </List>
-              )}
-            </AutoSizer>
-          </div>
-          <div
-            className="col-6 col-lg-8"
-            style={{
-              position: "sticky",
-              overflowY: "scroll"
-            }}
+            >
+              <SearchField
+                search={this.search}
+                listener={this._handleScanner}
+                refresh={this._onmount}
+              />
+              <FilterField
+                categories={this.state.categories}
+                value={this.state.selectedCategory}
+                onchange={c => {
+                  let searchItem = this.state.abstractItem.filter(
+                    v => v.category_name === c
+                  );
+                  console.log(c);
+                  this.setState({
+                    selectedCategory: c,
+                    searchItems: searchItem
+                  });
+                }}
+              />
+              <AutoSizer className="h-80">
+                {({ height, width }) => (
+                  <List
+                    height={height - 149}
+                    width={width - 20}
+                    itemCount={this.state.searchItems.length}
+                    itemSize={106}
+                  >
+                    {({ index, style }) => (
+                      <Collapse in={true}>
+                        <ItemRow
+                          style={style}
+                          selected={this.state.selectedId}
+                          onDeleted={this._handleDeleted}
+                          item={this.state.searchItems[index]}
+                          onSelected={id => {
+                            this.setState({ selectedId: id });
+                          }}
+                        />
+                      </Collapse>
+                    )}
+                  </List>
+                )}
+              </AutoSizer>
+            </div>
+          </Grid.Column>
+          <Grid.Column
+            mobile={8}
+            tablet={10}
+            computer={11}
+            style={{ height: "100%" }}
           >
             <ItemDetailPage
               itemID={this.state.selectedId}
               onFetchItem={this._handleOnFetchItem}
             />
-          </div>
-        </div>
+          </Grid.Column>
+        </Grid>
+
         <HomepageContext.Consumer>
           {({
             openScannerWindow,
@@ -319,7 +328,7 @@ export default class Homepage extends Component<Props, State> {
                   await this._handleQRSearch();
                 }}
               />
-
+              <CheckoutPage item={this.state.fetchItem} />
               <LoadingProgress
                 progress={this.state.loadingProgress}
                 open={this.state.loadingProgress !== undefined}
