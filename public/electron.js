@@ -51,7 +51,10 @@ function createWindow() {
         width: 400,
         height: 300,
         titleBarStyle: "hidden",
-        show: false
+        show: false,
+        webPreferences: {
+            nodeIntegration: true
+        }
     });
     mainWindow.loadURL(isDev
         ? "http://localhost:3000#/"
@@ -88,7 +91,8 @@ electron_1.app.on("ready", function () {
     });
 });
 electron_1.app.on("window-all-closed", function () {
-    electron_1.app.quit();
+    if (process.platform !== 'darwin')
+        electron_1.app.quit();
 });
 electron_1.app.on("activate", function () {
     if (mainWindow === null) {

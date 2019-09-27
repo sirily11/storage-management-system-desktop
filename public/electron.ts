@@ -61,7 +61,10 @@ function createWindow() {
     width: 400,
     height: 300,
     titleBarStyle: "hidden",
-    show: false
+    show: false,
+    webPreferences: {
+      nodeIntegration: true
+    }
   });
 
   mainWindow.loadURL(
@@ -108,7 +111,7 @@ app.on("ready", () => {
 });
 
 app.on("window-all-closed", () => {
-  app.quit()
+  if (process.platform !== 'darwin') app.quit()
 
 });
 

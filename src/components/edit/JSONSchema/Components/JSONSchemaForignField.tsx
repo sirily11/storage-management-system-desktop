@@ -30,7 +30,7 @@ export default function JSONSchemaForignField(props: Props) {
   const [openDialogIndex, setOpen] = useState(-1);
 
   function getURL(path?: string) {
-    return `${url}${path}`;
+    return `${url}/${path}`;
   }
 
   /**

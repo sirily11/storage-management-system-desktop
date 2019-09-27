@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { RouteComponentProps, Redirect } from "react-router";
 import { Schema } from "./JSONSchema/model/Schema";
 import axios from "axios";
-import { getURL } from "../settings/settings";
+import { getURL, getBaseURL } from "../settings/settings";
 import { JSONSchema } from "./JSONSchema";
 import {
   AppBar,
@@ -10,13 +10,17 @@ import {
   Typography,
   createMuiTheme,
   Paper,
-  IconButton
+  IconButton,
+  Collapse,
+  LinearProgress,
+  Fade
 } from "@material-ui/core";
 import { blueGrey } from "@material-ui/core/colors";
 import { MuiThemeProvider } from "@material-ui/core/styles";
 import { Link } from "react-router-dom";
 import ArrowBackIcon from "@material-ui/icons/ArrowBack";
 import { DetailStorageItem } from "../home/storageItem";
+import { Progress, Placeholder } from "semantic-ui-react";
 
 const theme = createMuiTheme({
   palette: {
@@ -138,10 +142,10 @@ export default class ItemEditPage extends Component<Props, State> {
             zIndex: 30
           }}
         >
-          {!isLoading && (
+          <Collapse in={!isLoading} mountOnEnter>
             <JSONSchema
               schemas={schema}
-              url={"http://0.0.0.0/"}
+              url={getBaseURL()}
               values={values}
               onSubmit={async data => {
                 if (isEdit) {
@@ -152,7 +156,25 @@ export default class ItemEditPage extends Component<Props, State> {
                 this.setState({ redirect: true });
               }}
             ></JSONSchema>
-          )}{" "}
+          </Collapse>
+          <Collapse in={isLoading}>
+            <div>
+              {[0, 1, 2, 3].map(n => (
+                <Placeholder>
+                  <Placeholder.Header image>
+                    <Placeholder.Line />
+                    <Placeholder.Line />
+                  </Placeholder.Header>
+                  <Placeholder.Paragraph>
+                    <Placeholder.Line />
+                    <Placeholder.Line />
+                    <Placeholder.Line />
+                    <Placeholder.Line />
+                  </Placeholder.Paragraph>
+                </Placeholder>
+              ))}
+            </div>
+          </Collapse>
         </Paper>
       </MuiThemeProvider>
     );
