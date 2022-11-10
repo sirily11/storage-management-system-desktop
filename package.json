@@ -96,7 +96,7 @@
     "axios-mock-adapter": "^1.17.0",
     "concurrently": "^4.1.2",
     "cross-env": "^6.0.0",
-    "electron": "^6.0.10",
+    "electron": "^18.3.7",
     "electron-builder": "^21.2.0",
     "ts-mockito": "^2.5.0",
     "wait-on": "^3.3.0"
